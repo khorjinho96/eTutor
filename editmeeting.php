@@ -33,12 +33,30 @@
                         ?>
 
                         <?php
-                            if (isset($_POST['submit'])){
-                                $title = $_POST['title'];
+                        if (isset($_POST['submit'])){
+                            if($_POST['submit'] === "Submit"){
+                                $errorMessages = array();
+                                if (preg_match("/[^a-zA-Z0-9 ]/", $_POST['title']) || empty(trim($_POST['title']))){
+                                    $errorMessages[] = "Invalid meeting title.";
+                                } else {
+                                    $title = trim($_POST['title']);
+                                }
+
                                 $date = $_POST['date'];
                                 $start = $_POST['start'];
                                 $end = $_POST['end'];
 
+                                if ($start > $end){
+                                    $errorMessages[] = "Start time cannot earlier than end time";
+                                }
+
+                                if($date == null || $start == null || $end == null){
+                                    $errorMessages[] = "Please complete the form";
+                                }
+
+                                if($_FILES['file']['size'] >= 4294967296) {
+                                    $errorMessages[] = "Records size more than 4gb";
+                                }
 
                                 //uploads https://artisansweb.net/how-to-implement-chunk-upload-in-php/
                                 set_time_limit(0);
@@ -47,58 +65,77 @@
                                     mkdir('records', 0777);
                                 }
 
-                                if($_FILES['file']['size'] == 0) {
-                                    echo "no image";
-                                    $sql = "UPDATE meeting SET meeting_name='$title',meeting_date='$date',meeting_start='$start',meeting_end='$end' WHERE meeting_id = '$meetingids'";
-                                    mysqli_query($conn, $sql);
-                                    echo "<script>window.location.href='viewmeeting.php'</script>";
-                                } else {
-                                    echo "gt image";
-                                    $filename = $_FILES["file"]["name"];
-                                    $filetype = $_FILES["file"]["type"];
-                                    //$filesize = $_FILES["file"]["size"];
-
-                                    // check file type
-                                    $allowed = array("mp4" => "video/mp4", "flv" => "video/flv", "mov" => "video/mov", "avi" => "video/avi", "wmv" => "video/wmv", "mkv" => "video/mkv");
-                                    $ext = pathinfo($filename, PATHINFO_EXTENSION);
-                                    if (!array_key_exists($ext, $allowed)) die("Error: Please select a valid file format. (MP4,FLV,MOV,AVI,WMV,mkv)  ");
-
-                                     // Check is file exist
-                                    if (file_exists("records/" . $filename)) {
-                                        echo $filename . " is already exists please rename your records.";
+                                if(count($errorMessages) === 0){
+                                    if($_FILES['file']['size'] == 0) {
+                                        //echo "no image";
+                                        $sql = "UPDATE meeting SET meeting_name='$title',meeting_date='$date',meeting_start='$start',meeting_end='$end' WHERE meeting_id = '$meetingids'";
+                                        mysqli_query($conn, $sql);
+                                        echo "<script>window.location.href='viewmeeting.php'</script>";
                                     } else {
-                                        $tmpfile = $_FILES['file']['tmp_name'];
-                                        $orig_file_size = filesize($tmpfile);
-                                        $target_file = 'records/' . microtime() . $_FILES['file']['name'];
+                                        //echo "gt image";
+                                        $filename = $_FILES["file"]["name"];
+                                        $filetype = $_FILES["file"]["type"];
+                                        //$filesize = $_FILES["file"]["size"];
 
-                                        $chunk_size = 256; // chunk in bytes
-                                        $upload_start = 0;
+                                        // check file type
+                                        $allowed = array("mp4" => "video/mp4", "flv" => "video/flv", "mov" => "video/mov", "avi" => "video/avi", "wmv" => "video/wmv", "mkv" => "video/mkv");
+                                        $ext = pathinfo($filename, PATHINFO_EXTENSION);
+                                        if (!array_key_exists($ext, $allowed)){
+                                            $errorMessages[] = "Please select a valid file format. (MP4,FLV,MOV,AVI,WMV,mkv)";
+                                        }
+                                        if(count($errorMessages) === 0){
+                                        // Check is file exist
+                                        if (file_exists("records/" . $filename)) {
+                                            $errorMessages[] =  $filename . " is already exists please rename your records.";
+                                        } else {
+                                            if(count($errorMessages) === 0){
+                                            $tmpfile = $_FILES['file']['tmp_name'];
+                                            $orig_file_size = filesize($tmpfile);
+                                            $target_file = 'records/' . microtime() . $_FILES['file']['name'];
 
-                                        $handle = fopen($tmpfile, "rb");
-                                        $fp = fopen($target_file, 'w');
+                                            $chunk_size = 256; // chunk in bytes
+                                            $upload_start = 0;
 
-                                        while ($upload_start < $orig_file_size) {
+                                            $handle = fopen($tmpfile, "rb");
+                                            $fp = fopen($target_file, 'w');
 
-                                        $contents = fread($handle, $chunk_size);
-                                        fwrite($fp, $contents);
+                                            while ($upload_start < $orig_file_size) {
 
-                                        $upload_start += strlen($contents);
-                                        fseek($handle, $upload_start);
+                                                $contents = fread($handle, $chunk_size);
+                                                fwrite($fp, $contents);
+
+                                                $upload_start += strlen($contents);
+                                                fseek($handle, $upload_start);
+                                            }
+
+                                            fclose($handle);
+                                            fclose($fp);
+                                            unlink($_FILES['file']['tmp_name']);
+
+                                            $sql = "UPDATE meeting SET meeting_name='$title',meeting_date='$date',meeting_start='$start',meeting_end='$end',meeting_record='$target_file' WHERE meeting_id = '$meetingids'";
+                                            mysqli_query($conn, $sql);
+                                            echo "File uploaded successfully.";
+                                            echo "<script>window.location.href='viewmeeting.php'</script>";
+                                            }
+                                        }
+                                        }
                                     }
 
-                                    fclose($handle);
-                                    fclose($fp);
-                                    unlink($_FILES['file']['tmp_name']);
-
-                                    $sql = "UPDATE meeting SET meeting_name='$title',meeting_date='$date',meeting_start='$start',meeting_end='$end',meeting_record='$target_file' WHERE meeting_id = '$meetingids'";
-                                    mysqli_query($conn, $sql);
-                                    echo "File uploaded successfully.";
-                                    echo "<script>window.location.href='viewmeeting.php'</script>";
-                                    }
                                 }
                             }
+                        }
                         ?>
-
+                        <?php
+                        if(!empty($errorMessages)){
+                            if(count($errorMessages) >0){
+                                echo "<div class='alert alert-danger'>";
+                                foreach($errorMessages as $value){
+                                    echo "<li>" . $value . "</li>";
+                                }
+                                echo "</div>";
+                            }
+                        }
+                        ?>
 
                         <div class="form-group">
                             <label for="title">Title:</label>

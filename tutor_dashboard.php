@@ -62,7 +62,7 @@
                                             echo "</tr>";
                                         }
                                     } else {
-                                        echo "<div class='alert alert-info'>You currently do not have any tutees.</div>";
+                                        echo "<div class='alert alert-info'>Tutor <strong>" . $email . "</strong> currently do not have any tutees.</div>";
                                     }
                                 }
                             ?>

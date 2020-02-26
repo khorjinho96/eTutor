@@ -118,7 +118,6 @@
             </div>
         </main>
         <?php Utility::loadJs(array("jquery-3.4.1.min.js", "bootstrap.min.js")); ?>
-        <audio id="msgTone" src="assets/media/msgtone.mp3" preload="auto"></audio>
         <script type="text/javascript">
             $(document).ready(
                 function(){

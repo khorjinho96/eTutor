@@ -73,6 +73,7 @@
                         </div>
 
                         <div class="form-group">
+                            <a href="Document_Title.php" class="btn btn-primary btn-secondary float-right ml-1">Cancel</a>
                             <button type="submit" class="btn btn-primary float-right" name="AddCommentBTN">Add Comment</button>
                         </div>
                     </form>

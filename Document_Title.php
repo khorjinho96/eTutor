@@ -13,7 +13,7 @@
         <main class="container">
             <div class="row pt-3">
                 <div class="col-md-12 col-xs-12 col-sm-12">
-                    <h3 class="text-center">Document Title</h3>
+                    <h3 class="text-center">Material Discussion</h3>
                     <hr />
                     <form method="post" action="Document_Title.php">
                         <div class="table-responsive">

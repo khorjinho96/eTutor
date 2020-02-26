@@ -20,7 +20,18 @@
             $end = $_POST['end'];
             $recipient_email = $_POST['recipient'];
             $filename = "";
-        
+
+            if ($start > $end){
+                $errorMessages[] = "Start time cannot earlier than end time";
+            }
+
+            if(isset($title)){
+                if($date == null || $start == null || $end == null){
+                    $errorMessages[] = "Please complete the form";
+                }
+            }
+
+
             if(count($errorMessages) === 0){
                 $sql = "INSERT INTO meeting (meeting_name,meeting_date,meeting_start,meeting_end,user_email, recipient_email) VALUES ('$title','$date','$start','$end','$uid','$recipient_email')";
                 mysqli_query($conn, $sql);

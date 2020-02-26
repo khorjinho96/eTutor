@@ -9,7 +9,7 @@
             $Comment = trim(mysqli_real_escape_string($db,$_POST['InputComment']));
         }                
 
-        if (preg_match("/[^0-9]/", $_POST['InputDocID']) || empty(trim($_POST['InputDocID']))){
+        if (preg_match("/[^a-zA-Z0-9 ]/", $_POST['InputDocID']) || empty(trim($_POST['InputDocID']))){
             $errorMessages[] = "Invalid document ID.";
         } else {
             $Comment_Doc_ID = trim(mysqli_real_escape_string($db,$_POST['InputDocID']));
@@ -64,6 +64,8 @@
 
             if (!in_array($file_extension, $allowed_docs_extension)) {
                 echo "<script type='text/javascript'>alert('Only accept .docx and .pdf!');</script>";
+            }elseif (($_FILES["fileToUpload"]["size"] > 10240000)){
+                echo "<script type='text/javascript'>alert('File has exceed 10mb limit!');</script>";
             } else {
                 $uploaded_file = $_FILES['fileToUpload']['tmp_name'];
                 $uploaded_file = file_get_contents($uploaded_file);
@@ -79,12 +81,12 @@
         }
     }
 
-    //delete comment
-    if (isset($_GET["delete"])&& !isset($_POST['AddCommentBTN'])) {
-        $id = $_GET["delete"];
-        $commentEmail = getUserEmail();
-        $sql_delete_comment = "DELETE FROM commentdb WHERE Comment_ID ='$id' AND Comment_User_Email = '$commentEmail'";
-        $result_delete_comment = mysqli_query($db, $sql_delete_comment);
+//delete comment
+if (isset($_GET["delete"])) {
+    $id = $_GET["delete"];
+    $sql_delete_comment = "DELETE FROM commentdb WHERE Comment_ID ='$id'";
+    $result_delete_comment = mysqli_query($db, $sql_delete_comment);
 
-        echo "<script type='text/javascript'>alert('Successfully Delete')</script>";
-    }
+    echo "<script type='text/javascript'>alert('Successfully Delete')</script>";
+    header("Location:Document_Forum.php");
+}

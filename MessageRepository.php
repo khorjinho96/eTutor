@@ -135,7 +135,7 @@
                 mysqli_stmt_execute($stmt);
                 mysqli_stmt_store_result($stmt);
                 if(mysqli_stmt_num_rows($stmt) > 0){
-                    mysqli_stmt_bind_result($stmt, $recipientEmail, $dateSend, $totalMessage);
+                    mysqli_stmt_bind_result($stmt, $recipientEmail, $dateSend, $totalMessage);                    
                     while(mysqli_stmt_fetch($stmt)){
                         if(array_key_exists($recipientEmail, $result)) {
                             $result[$recipientEmail][$dateSend] = $totalMessage; 

@@ -232,6 +232,28 @@
 
             return $result;
         }
+
+        public function getAllocation() {
+            $stmt = mysqli_stmt_init($this->databaseConnection);
+            if(mysqli_stmt_prepare($stmt, "SELECT StudentEmail, TutorEmail, DateAssigned FROM assign ORDER BY StudentEmail, TutorEmail, DateAssigned ASC")){
+                mysqli_stmt_execute($stmt);
+                mysqli_stmt_store_result($stmt);
+                $result = array();
+                if(mysqli_stmt_num_rows($stmt) > 1) {                
+                    mysqli_stmt_bind_result($stmt, $studentEmail, $tutorEmail, $dateAssigned);
+                    while(mysqli_stmt_fetch($stmt)){
+                        $result[] = array(
+                            "studentEmail" => $studentEmail,
+                            "tutorEmail" => $tutorEmail,
+                            "dateAssigned" => $dateAssigned
+                        );
+                    }
+                }                   
+            }
+            mysqli_stmt_close($stmt);
+
+            return $result;
+        }        
     }
 
 

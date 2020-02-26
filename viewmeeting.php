@@ -50,7 +50,11 @@
                                         echo "<td>$meetingdate</td>";
                                         echo "<td>$meetingstart</td>";
                                         echo "<td>$meetingend</td>";
-                                        echo "<td>$meetingrecord</td>";
+                                        if ($meetingrecord != null){
+                                            echo "<td><a href='$meetingrecord'>link</a></td>";
+                                        }else{
+                                            echo "<td>No Records</td>";
+                                        }
                                         echo "<td>$recipient</td>";
                                         echo "<td><button type='submit' name='edit' id='edit' value='$meetingid' class='btn btn-primary btn-block'>Edit</button></td>";
                                     }

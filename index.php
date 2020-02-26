@@ -53,7 +53,7 @@
                     <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
                         <div class="form-group">
                             <label for="email">Email</label>
-                            <input type="email" class="form-control" id="email" name="email" placeholder="Email" required />
+                            <input type="email" class="form-control" id="email" name="email" placeholder="Email" <?php if(!empty($_POST['email'])) { echo "value='" . $_POST['email'] . "'"; } ?> required />
                         </div>
                         <div class="form-group">
                             <label for="password">Password</label>

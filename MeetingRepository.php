@@ -16,6 +16,27 @@
         }
 
         public function getMeetingByEmail($email) {
+            $result = array();
+            $stmt = mysqli_stmt_init($this->databaseConnection);
+            if(mysqli_stmt_prepare($stmt, "SELECT recipient_email, DATE(meeting_date), COUNT(meeting_id) AS TotalMeeting FROM meeting WHERE user_email = ? GROUP BY recipient_email, DATE(meeting_date) ORDER BY meeting_date ASC")){
+                mysqli_stmt_bind_param($stmt, "s", $email);
+                mysqli_stmt_execute($stmt);
+                mysqli_stmt_store_result($stmt);
+                if(mysqli_stmt_num_rows($stmt) > 0){
+                    mysqli_stmt_bind_result($stmt, $recipientEmail, $dateSend, $totalMeeting);
+                    while(mysqli_stmt_fetch($stmt)){
+                        if(array_key_exists($recipientEmail, $result)) {
+                            $result[$recipientEmail][$dateSend] = $totalMeeting; 
+                        } else {
+                            $result[$recipientEmail] = array(
+                                $dateSend => $totalMeeting
+                            );
+                        }
+                    }                    
+                }
+                mysqli_stmt_close($stmt);
+                return $result;
+            }
             $meeting = array();
             $meeting['tutor2@gmail.com'] = array(
                 "2020-02-15" => 11,
