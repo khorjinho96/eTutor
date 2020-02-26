@@ -69,14 +69,6 @@
                     echo '<a class="dropdown-item" href="Document_Title.php">View Discussion</a>';
                     echo '</div>';
                     echo '</li>';
-                    echo '<li class="nav-item dropdown">';
-                    echo '<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Meeting</a>';
-                    echo '<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">';
-                    echo '<a class="dropdown-item" href="addmeeting.php">Add Meeting</a>';
-                    echo '<a class="dropdown-item" href="viewmeeting.php">View Meeting</a>';
-                    echo '</div>';
-                    echo '</li>';
-                    echo '<li class="nav-item"><a class="nav-link" href="messaging.php">Messaging</a></li>';
 
                     echo '<li class="nav-item dropdown">';
                     echo '<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Meeting</a>';
