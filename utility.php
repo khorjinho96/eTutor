@@ -4,7 +4,7 @@
             if(count($errorMessages) > 0){
                 echo "<div class='alert alert-danger'>";
                 foreach($errorMessages as $key => $error){
-                    echo "<p class='text-jusitfy'>" . $error . "</p>";
+                    echo "<li class='text-jusitfy'>" . $error . "</li>";
                 }
                 echo "</div>";
             }
@@ -18,6 +18,9 @@
         public static function loadCss($cssFiles = array()){
             if(count($cssFiles) > 0){
                 foreach($cssFiles as $file){
+                    if($file == "fontawesome"){
+                        echo "<link rel='stylesheet' href='assets/fontawesome/css/all.css'>";
+                    }
                     echo "<link rel='stylesheet' href='assets/css/" . $file . "'>";		
                 }
             }
@@ -48,19 +51,19 @@
                 session_start();
             }
             $entity = !empty($_SESSION['Entity']) ? $_SESSION['Entity'] : null;
+            echo '<nav class="navbar navbar-expand-lg navbar-dark bg-dark">';
+            echo '<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">';
+            echo '<span class="navbar-toggler-icon"></span>';
+            echo '</button>';
             switch($entity) {
                 case "tutor":
                 case "student":
-                    echo '<nav class="navbar navbar-expand-lg navbar-dark bg-dark">';
+                    echo '<div class="collapse navbar-collapse" id="navbarToggleExternalContent">';
                     echo "<div class='container'>";
                     echo '<a class="navbar-brand" href="index.php">eTutor</a>';
-                    echo '<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">';
-                    echo '<span class="navbar-toggler-icon"></span>';
-                    echo '</button>';
-                        
                     echo '<ul class="navbar-nav mr-auto">';		
                     echo '<li class="nav-item"><a class="nav-link" href="student_dashboard.php">Dashboard</a></li>';
-                    echo '<li class="nav-item"><a class="nav-link" href="#">Blogging</a></li>';
+                    echo '<li class="nav-item"><a class="nav-link" href="blogging.php">Blogging</a></li>';
 
                     echo '<li class="nav-item dropdown">';
                     echo '<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Material Discussion</a>';
@@ -69,6 +72,8 @@
                     echo '<a class="dropdown-item" href="Document_Title.php">View Discussion</a>';
                     echo '</div>';
                     echo '</li>';
+
+                    echo '<li class="nav-item"><a class="nav-link" href="messaging.php">Messaging</a></li>';
 
                     echo '<li class="nav-item dropdown">';
                     echo '<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Meeting</a>';
@@ -83,18 +88,14 @@
                     echo '<ul class="navbar-nav ml-auto">';
                     echo '<li class="nav-item"><a class="nav-link" href="logout.php">Logout</a></li>';
                     echo '</ul>';
-                    echo "</div>";
-                    echo '</nav>';
+                    echo '</div>';
+                    echo '</div>';
                 break;
 
                 case 'admin':
-                    echo '<nav class="navbar navbar-expand-lg navbar-dark bg-dark">';
+                    echo '<div class="collapse navbar-collapse" id="navbarToggleExternalContent">';
                     echo "<div class='container'>";
                     echo '<a class="navbar-brand" href="index.php">eTutor</a>';
-                    echo '<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">';
-                    echo '<span class="navbar-toggler-icon"></span>';
-                    echo '</button>';
-                        
                     echo '<ul class="navbar-nav mr-auto">';		
                     echo '<li class="nav-item"><a class="nav-link" href="admin_dashboard.php">Dashboard</a></li>';
                     echo '<li class="nav-item"><a class="nav-link" href="allocate.php">Allocate</a></li>';
@@ -103,22 +104,15 @@
                     echo '<ul class="navbar-nav ml-auto">';
                     echo '<li class="nav-item"><a class="nav-link" href="logout.php">Logout</a></li>';
                     echo '</ul>';
-                    echo "</div>";
-                    echo '</nav>';
+                    echo '</div>';
+                    echo '</div>';
                     break;
 
                 default:
-                    echo '<nav class="navbar navbar-expand-lg navbar-dark bg-dark">';
-                    echo "<div class='container'>";
-                    echo '<a class="navbar-brand" href="index.php">eTutor</a>';
-                    echo '<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">';
-                    echo '<span class="navbar-toggler-icon"></span>';
-                    echo '</button>';
-                    echo "</div>";
-                    echo '</nav>';
                     break;
             }
-
+            echo "</div>";
+            echo '</nav>';
         }
 
         public static function loadFooter(){

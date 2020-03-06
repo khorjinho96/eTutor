@@ -113,11 +113,13 @@
                                         switch(getUserEntity()){
                                             case 'tutor':
                                                 $recipient = $assignRepo->getStudent(getUserEmail());
+                                                print_r($recipient);
+                                                echo "Hi";
                                                 break;
 
                                             case 'student':
                                                 $recipient = $assignRepo->getTutor(getUserEmail());
-                                                print_r($recipient);
+                                                echo "ho2";
                                                 break;
 
                                             default:
@@ -202,13 +204,12 @@
                         p.innerHTML = "Real time feature is not available. Please connect to the recipient from time to time to get the latest update.";
                         div.appendChild(p);
                         $('#form').append(div);
-                        console.log(div);
                     }
 
                     $(".deleteLink").click(
                         function(event) {                            
-                            event.preventDefault();
                             if(confirm("Confirm deleting message? It is irreversible.")){
+                                console.log("Hi");
                                 return true;
                             } else {
                                 return false;
@@ -220,7 +221,9 @@
                         switch($(this).val()){
                             case 'Send':
                                 if($('#message').val().trim().length > 0) {
-                                    conn.send(JSON.stringify({ flag: "message", message : $('#message').val(), recipient : $('#recipient').val() }));
+                                    if(conn.readyState === WebSocket.OPEN){
+                                        conn.send(JSON.stringify({ flag: "message", message : $('#message').val(), recipient : $('#recipient').val() }));
+                                    }
                                 } else {
                                     alert("Invalid message");
                                 }

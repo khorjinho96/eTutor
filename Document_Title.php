@@ -17,7 +17,7 @@
                     <hr />
                     <form method="post" action="Document_Title.php">
                         <div class="table-responsive">
-                            <table id="docdb" class="table table-striped table-bordered">
+                            <table id="docdb" class="table table-striped table-bordered" style="width: 100%">
                                 <thead>
                                     <tr class="text-center">
                                         <th align="center">User's Email</th>
@@ -60,7 +60,9 @@
         <?php Utility::loadJs(array("jquery-3.4.1.min.js", "bootstrap.min.js", "popper.js", "jquery.dataTables.min.js")); ?>
         <script type="text/javascript">
             $(document).ready(function () {
-                $('#docdb').DataTable();
+                $('#docdb').dataTable({
+                    "scrollX": true
+                });
             })
         </script>
         <?php Utility::loadFooter(); ?>

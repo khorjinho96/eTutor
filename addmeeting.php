@@ -33,7 +33,7 @@
 
 
             if(count($errorMessages) === 0){
-                $sql = "INSERT INTO meeting (meeting_name,meeting_date,meeting_start,meeting_end,user_email, recipient_email) VALUES ('$title','$date','$start','$end','$uid','$recipient_email')";
+                $sql = "INSERT INTO meeting (meeting_name,meeting_date,meeting_start,meeting_end,user_email, recipient_email,meeting_status) VALUES ('$title','$date','$start','$end','$uid','$recipient_email','Pending')";
                 mysqli_query($conn, $sql);
                 echo "<script>window.location.href='viewmeeting.php'</script>";
             }

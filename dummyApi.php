@@ -1,74 +1,100 @@
 <?php
     $data = array();
 
-    $data['admin1@gmail.com'] = array(
-        "id" => 20,
-        "email" => 'admin1@gmail.com',
-        "entity" => "admin",
-        "name" => "admin1"
-    );
-
-    $data["student5@gmail.com"] = array(
-        "id" => 1,
-        "email" => "student5@gmail.com",
-        "entity" => "student",
-        "name" => "jinho"
-    );
-
-    $data["jinhomobile@gmail.com"] = array(
-        "id" => 1,
-        "email" => "jinhomobile@gmail.com",
-        "entity" => "student",
-        "name" => "jinho"
-    );
-
     $data["student1@gmail.com"] = array(
         "id" => 1,
         "email" => "student1@gmail.com",
         "entity" => "student",
-        "name" => "user1"
+        "password" => "12345678",
+        "name" => "student1"
     );
 
     $data["student2@gmail.com"] = array(
         "id" => 2,
         "email" => "student2@gmail.com",
         "entity" => "student",
-        "name" => "user2"
+        "password" => "12345678",
+        "name" => "student2"
     );
 
     $data["student3@gmail.com"] = array(
         "id" => 3,
         "email" => "student3@gmail.com",
         "entity" => "student",
-        "name" => "user3"
+        "password" => "12345678",
+        "name" => "student3"
     );
 
-    $data["rockjiann@gmail.com"] = array(
+    $data["student4@gmail.com"] = array(
         "id" => 4,
-        "email" => "rockjiann@gmail.com",
-        "entity" => "tutor",
-        "name" => "user4"
+        "email" => "student4@gmail.com",
+        "entity" => "student",
+        "password" => "12345678",
+        "name" => "student4"
+    );
+
+    $data["khorjinho96@gmail.com"] = array(
+        "id" => 5,
+        "email" => "khorjinho96@gmail.com",
+        "entity" => "student",
+        "password" => "12345678",
+        "name" => "student5"
     );
 
     $data["tutor1@gmail.com"] = array(
-        "id" => 5,
+        "id" => 1,
         "email" => "tutor1@gmail.com",
         "entity" => "tutor",
-        "name" => "user7"
+        "password" => "12345678",
+        "name" => "tutor1"
     );
 
     $data["tutor2@gmail.com"] = array(
-        "id" => 5,
+        "id" => 2,
         "email" => "tutor2@gmail.com",
         "entity" => "tutor",
-        "name" => "user5"
+        "password" => "12345678",
+        "name" => "tutor2"
     );
 
     $data["tutor3@gmail.com"] = array(
-        "id" => 6,
+        "id" => 3,
         "email" => "tutor3@gmail.com",
         "entity" => "tutor",
-        "name" => "user6"
+        "password" => "12345678",
+        "name" => "tutor3"
+    );
+
+    $data["tutor4@gmail.com"] = array(
+        "id" => 4,
+        "email" => "tutor4@gmail.com",
+        "entity" => "tutor",
+        "password" => "12345678",
+        "name" => "tutor4"
+    );
+
+    $data["jinhomobile@gmail.com"] = array(
+        "id" => 5,
+        "email" => "jinhomobile@gmail.com",
+        "entity" => "tutor",
+        "password" => "12345678",
+        "name" => "tutor5"
+    );
+
+    $data["admin1@gmail.com"] = array(
+        "id" => 1,
+        "email" => "admin1@gmail.com",
+        "entity" => "admin",
+        "password" => "12345678",
+        "name" => "admin1"
+    );
+
+    $data["admin2@gmail.com"] = array(
+        "id" => 2,
+        "email" => "admin2@gmail.com",
+        "entity" => "admin",
+        "password" => "12345678",
+        "name" => "admin2"
     );
 
     if(empty($_POST['function'])){
@@ -127,8 +153,13 @@
 
         case 'authenticate':
             if(array_key_exists($_POST['username'], $data)){
-                http_response_code(200);
-                echo json_encode($data[$_POST['username']]);
+                if($_POST['password'] === $data[$_POST['username']]['password']) {
+                    http_response_code(200);
+                    echo json_encode($data[$_POST['username']]);
+                } else {
+                    http_response_code(500);
+                    echo json_encode(array("message" => "Username or password invalid."));
+                }
             } else {
                 http_response_code(500);
                 echo json_encode(array("message" => "Username or password invalid."));
@@ -142,7 +173,11 @@
                 foreach($tutor as $tutorEmail){
                     if(!array_key_exists($tutorEmail, $data)){
                         $notTutor[] = $tutorEmail;
-                    }
+                    } else {
+                        if($data[$tutorEmail]['entity'] !== 'tutor') {
+                            $notTutor[] = $tutorEmail;
+                        }
+                    }                        
                 }
 
                 if(count($notTutor) === 0){
@@ -165,7 +200,11 @@
                 foreach($student as $studentEmail){
                     if(!array_key_exists($studentEmail, $data)){
                         $notStudent[] = $studentEmail;
-                    }
+                    } else {
+                        if($data[$studentEmail]['entity'] !== 'student') {
+                            $notStudent[] = $studentEmail;
+                        }
+                    }                        
                 }                    
 
                 if(count($notStudent) === 0){

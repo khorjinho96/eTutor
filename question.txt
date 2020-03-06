@@ -1,0 +1,61 @@
+1. create screencast recording includign screen and sound
+ - need to be hosted somewhere
+
+2. need to host all the artefacts somewhere that is accessible
+ - ERD, minutes, test log, product backlog, UML
+
+3. need to do presentation to tutor
+
+Group report
+ - ERD
+ - submission of reports
+ - test plan, test log, suffiecient data to fully test, evidence of testing
+   finding errors, test items linked to user stories in the product backlog
+ - burn down chart, minutes of meeting, user stories, sprints, product
+   backlogs
+ - UML diagrams
+
+Individual report
+ - give the URL of the group repository, the screencast
+
+comp1640
+
+group 60%
+ - cover
+ - put the group repo url, system url, screen url, username and password
+ - must same exact copy
+ - problem statement get from question
+ - objective : to deliver the system at least 3
+ - requirement tool: software hardware
+ - proposed methodology: explain what scrum is one page and half
+ - user story = 1 2 
+ - product backlog = in table form
+ - sprint backlog : for each member: no task has been assigned 
+    sprint table
+    burn down chart
+    member activity log: name
+ - system assumptions: 
+    park the easy way as system assumption - numering with sentences
+    
+ - test plan split into sprint by sprint
+ - test log : involve system screen shot
+ - minutes: at least ten and ten photos
+ - 
+
+individual 40%
+ - cover
+ - evaluation of product and process:
+    - to write in two parts
+        evaluate yr own product : one pages (the whole system)
+        process:
+            your scrum in a sense that explain each of yr sprint (one pages)
+ - evaluation of theme:
+    - scrum master decide the factor: at least five factors(must be the same)                
+    - justification for each member must half the page in paragraph form
+    - self evaluation : must also realise where is my scrum (one page) - how
+      you participate in scrum, give opinion about benefits
+    - references
+        - group references:
+        - individual references: 
+
+

@@ -1,5 +1,8 @@
 <?php
     session_start();
-    echo "<pre>";
-    print_r($_SESSION);
-    echo "</pre>";
+require "session.php";
+                                        require "AssignRepository.php";
+                                        $assignRepo = new AssignRepository();
+                                                echo getUserEmail();                   
+                                                $recipient = $assignRepo->getStudent(getUserEmail());
+                                                print_r($recipient);

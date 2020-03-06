@@ -103,6 +103,50 @@
             }
         }
 
+        public function getMessageSentLastAll($email = array()){
+            $result = array();
+            $stmt = mysqli_stmt_init($this->databaseConnection);
+            if(mysqli_stmt_prepare($stmt, "SELECT COUNT(Id) AS TotalMessage FROM messages WHERE (SenderEmail = ? OR RecipientEmail = ?)")){
+                mysqli_stmt_bind_param($stmt, "ss", $value, $value);
+                mysqli_stmt_bind_result($stmt, $totalMessage);
+                foreach($email as $value){
+                    mysqli_stmt_execute($stmt);
+                    mysqli_stmt_store_result($stmt);
+                    if(mysqli_stmt_num_rows($stmt) === 1){
+                        mysqli_stmt_fetch($stmt);
+                        $result[$value] = $totalMessage;
+                    }
+                }
+                mysqli_stmt_close($stmt);
+                return $result;
+            }
+        }
+
+        public function getMessageSentByDay($email = array(), $dayNum){
+            $result = array();
+            $today = new DateTime("now");
+            $today = $today->format("Y-m-d");
+            $lastDay = new DateTime("now");
+            $lastDay->sub(new DateInterval('P' . $dayNum . 'D'));
+            $lastDay = $lastDay->format("Y-m-d");
+            $stmt = mysqli_stmt_init($this->databaseConnection);
+            if(mysqli_stmt_prepare($stmt, "SELECT COUNT(Id) AS TotalMessage FROM messages WHERE (SenderEmail = ? OR RecipientEmail = ?) AND DATE(DateSend) <= ? AND DATE(DateSend) > ?")){
+                mysqli_stmt_bind_param($stmt, "ssss", $email, $email, $today, $lastDay);
+                mysqli_stmt_bind_result($stmt, $totalMessage);
+                foreach($email as $value){
+                    $email = $value['email'];
+                    mysqli_stmt_execute($stmt);
+                    mysqli_stmt_store_result($stmt);
+                    if(mysqli_stmt_num_rows($stmt) === 1){
+                        mysqli_stmt_fetch($stmt);
+                        $result[$email] = $totalMessage;
+                    }
+                }
+                mysqli_stmt_close($stmt);
+                return $result;
+            }
+        }
+
         public function getMessageSentLast7($email = array()){
             $result = array();
             $today = new DateTime("now");

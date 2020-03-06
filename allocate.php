@@ -112,6 +112,7 @@
                             <button type="button" id="addTutor" class="btn btn-primary btn-block">Add Tutor</button>
                             <button type="submit" id="allocate" form="form" class="btn btn-success btn-block">Allocate</button>
                             <button type="button" id="reallocate" class="btn btn-secondary btn-block">Reallocate</button>
+                            <a href="showAllocation.php" class="btn btn-secondary btn-block">Show Allocation</a>
                         </div>
                     </div>
                 </div>
