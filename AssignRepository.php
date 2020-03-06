@@ -29,7 +29,7 @@
                 if(count($tutor) > 0){
                     $tutor = $this->userRepo->verifyTutor($tutor);
                 } else {
-                    throw new Exception("Tutor emails can be empty.");
+                    throw new Exception("Tutor emails cannot be empty.");
                 }                
 
                 $stmt = mysqli_stmt_init($this->databaseConnection);
@@ -41,6 +41,7 @@
                     foreach($student as $studentEmail){
                         foreach($tutor as $tutorEmail){                            
                             mysqli_stmt_execute($stmt);
+							$result[200] = array();
                             if(mysqli_stmt_affected_rows($stmt) === 1) {
                                 if(!in_array($studentEmail, $studentList)){
                                     $studentList[] = $studentEmail;
@@ -49,21 +50,22 @@
                                     $tutorList[] = $tutorEmail;
                                 }
 
-                                $result[] = array(
+                                $result[200][] = array(
                                     "status" => 200,
                                     "message" => $studentEmail . " has been allocated tutor " . $tutorEmail . " successfully."
                                 );
                             } else {
+								$result[500] = array();
                                 switch(mysqli_stmt_errno($stmt)){
                                     case 1062:
-                                        $result[] = array(
+                                        $result[500][] = array(
                                             "status" => 500,
                                             "message" => $studentEmail . " has already been allocated tutor " . $tutorEmail . "."
                                         );
                                         break;
 
                                     default:
-                                        $result[] = array(
+                                        $result[500][] = array(
                                             "status" => 500,
                                             "message" => $studentEmail . " failed to be allocated tutor " . $tutorEmail . ". " . mysqli_stmt_error($stmt)
                                         );
@@ -73,17 +75,17 @@
                         }
                     }
 
-                    if(count($result) > 0){
+                    if(count($result[200]) > 0){
                         if($reallocate === true){
                             $emailService = new EmailService("System Notification");
                             $studentStatus = $emailService->notifyStudents($studentList, "You have been reallocated personal tutor(s).");
                             $emailService = new EmailService("System Notification");
-                            $tutorStatus = $emailService->notifyTutors($studentList, "You have been reallocated student(s).");
+                            $tutorStatus = $emailService->notifyTutors($tutorList, "You have been reallocated student(s).");
                         } else {
                             $emailService = new EmailService("System Notification");
                             $studentStatus = $emailService->notifyStudents($studentList, "You have been allocated personal tutor(s).");
                             $emailService = new EmailService("System Notification");
-                            $tutorStatus = $emailService->notifyTutors($studentList, "You have been allocated student(s).");
+                            $tutorStatus = $emailService->notifyTutors($tutorList, "You have been allocated student(s).");
                         }
                         if($studentStatus === false){
                             $result[] = array(
@@ -99,9 +101,9 @@
                             );
                         }
 
-                        return $result;
+                        return $result[200];
                     } else{
-                        throw new Exception("Result no available.");
+                        return $result[500];
                     }
                     mysqli_stmt_close($stmt);
                 }
