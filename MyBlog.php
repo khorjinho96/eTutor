@@ -77,9 +77,7 @@ $uname = getUserName();
 </tr> ";
                         }
                     }
-                    else{
-                        echo  $select.mysqli_error($conn);
-                    }
+                  
 
 
                     ?>
