@@ -11,7 +11,7 @@
         private const ADMIN_NAME = "eTutor System";
 
         public function __construct($subject = "") {
-            $this->sendgridInstance = new \SendGrid('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');
+            $this->sendgridInstance = new \SendGrid('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');
             $this->emailInstance = new \SendGrid\Mail\Mail();
             $this->emailInstance->setFrom(self::ADMIN_EMAIL, self::ADMIN_NAME);
             $this->emailInstance->setSubject($subject);

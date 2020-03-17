@@ -28,10 +28,10 @@
                 $student = $assignRepo->getStudent($email);       
 
                 $messageRepo = new MessageRepository();
-                $message = $messageRepo->getMessageSentByDay($student, $_POST['dayNum']);
+                $message = $messageRepo->getMessageSentByDay($student, $_POST['dayNum'], $email);
 
                 $meetingRepo = new MeetingRepository();
-                $meeting = $meetingRepo->getMeetingByDay($student, $_POST['dayNum']);        
+                $meeting = $meetingRepo->getMeetingByDay($student, $_POST['dayNum'], $email);        
             }
             catch(Exception $ex){
                 $errorMessage = $ex->getMessage();

@@ -15,7 +15,6 @@
             }
 
             $this->userRepo = new UserRepository();            
-            $this->sendGrid = new \SendGrid('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');
         }
 
         public function assign($student = array(), $tutor = array(), $staffId, $reallocate = false) {

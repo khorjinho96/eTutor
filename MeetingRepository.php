@@ -46,7 +46,7 @@
             return $meeting;
         }
 
-        public function getMeetingByDay($email = array(), $dayNum){
+        public function getMeetingByDay($email = array(), $dayNum, $tutorEmail){
             $result = array();
             $today = new DateTime("now");
             $today = $today->format("Y-m-d");
@@ -54,8 +54,16 @@
             $lastDay->sub(new DateInterval('P' . $dayNum. 'D'));
             $lastDay = $lastDay->format("Y-m-d");
             $stmt = mysqli_stmt_init($this->databaseConnection);
-            if(mysqli_stmt_prepare($stmt, "SELECT COUNT(meeting_id) AS TotalMeeting FROM meeting WHERE (user_email = ? OR recipient_email = ?) AND DATE(meeting_date) <= ? AND DATE(meeting_date) > ?")){
-                mysqli_stmt_bind_param($stmt, "ssss", $email, $email, $today, $lastDay);
+            if(mysqli_stmt_prepare($stmt, 
+                "SELECT 
+                    COUNT(meeting_id) AS TotalMeeting 
+                 FROM 
+                    meeting 
+                WHERE 
+                    ((user_email = ? AND recipient_email = ?) OR (user_email = ? AND recipient_email = ?))
+                AND 
+                    DATE(meeting_date) > ?")){
+                mysqli_stmt_bind_param($stmt, "sssss", $email, $tutorEmail, $tutorEmail, $email, $lastDay);
                 mysqli_stmt_bind_result($stmt, $totalMessage);
                 foreach($email as $value){
                     $email = $value['email'];

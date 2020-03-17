@@ -122,7 +122,7 @@
             }
         }
 
-        public function getMessageSentByDay($email = array(), $dayNum){
+        public function getMessageSentByDay($email = array(), $dayNum, $tutorEmail){
             $result = array();
             $today = new DateTime("now");
             $today = $today->format("Y-m-d");
@@ -130,8 +130,16 @@
             $lastDay->sub(new DateInterval('P' . $dayNum . 'D'));
             $lastDay = $lastDay->format("Y-m-d");
             $stmt = mysqli_stmt_init($this->databaseConnection);
-            if(mysqli_stmt_prepare($stmt, "SELECT COUNT(Id) AS TotalMessage FROM messages WHERE (SenderEmail = ? OR RecipientEmail = ?) AND DATE(DateSend) <= ? AND DATE(DateSend) > ?")){
-                mysqli_stmt_bind_param($stmt, "ssss", $email, $email, $today, $lastDay);
+            if(mysqli_stmt_prepare($stmt, 
+                "SELECT 
+                    COUNT(Id) AS TotalMessage 
+                 FROM 
+                    messages 
+                WHERE 
+                    ((SenderEmail = ? AND RecipientEmail = ?) OR (SenderEmail = ? AND RecipientEmail = ?))
+                AND 
+                    DATE(DateSend) > ?")){
+                mysqli_stmt_bind_param($stmt, "sssss", $email, $tutorEmail, $tutorEmail, $email, $lastDay);
                 mysqli_stmt_bind_result($stmt, $totalMessage);
                 foreach($email as $value){
                     $email = $value['email'];
