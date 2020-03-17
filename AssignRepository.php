@@ -37,10 +37,11 @@
                     $result = array();
                     $studentList = array(); $tutorList = array();
                     $date = date("Y-m-d H-i-s");
+                    $result[200] = array();
+                    $result[500] = array();
                     foreach($student as $studentEmail){
                         foreach($tutor as $tutorEmail){                            
                             mysqli_stmt_execute($stmt);
-							$result[200] = array();
                             if(mysqli_stmt_affected_rows($stmt) === 1) {
                                 if(!in_array($studentEmail, $studentList)){
                                     $studentList[] = $studentEmail;
@@ -54,7 +55,6 @@
                                     "message" => $studentEmail . " has been allocated tutor " . $tutorEmail . " successfully."
                                 );
                             } else {
-								$result[500] = array();
                                 switch(mysqli_stmt_errno($stmt)){
                                     case 1062:
                                         $result[500][] = array(
@@ -87,23 +87,20 @@
                             $tutorStatus = $emailService->notifyTutors($tutorList, "You have been allocated student(s).");
                         }
                         if($studentStatus === false){
-                            $result[] = array(
+                            $result[200][] = array(
                                 "status" => 500,
                                 "message" => "Failed to send notification emails to students."
                             );
                         }
 
                         if($tutorStatus === false) {
-                            $result[] = array(
+                            $result[200][] = array(
                                 "status" => 500,
                                 "message" => "Failed to send notification emails to tutors."
                             );
                         }
-
-                        return $result[200];
-                    } else{
-                        return $result[500];
                     }
+                    return $result;                    
                     mysqli_stmt_close($stmt);
                 }
             }

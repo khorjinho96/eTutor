@@ -58,12 +58,17 @@
                         }
 
                         if(!empty($result)){
-                            if(count($result) > 0) {
-                                foreach($result as $value){
-                                    if($value['status'] === 200){
+                            if(!empty($result[200])){
+                                if(count($result[200]) > 0) {
+                                    foreach($result[200] as $value){
                                         echo "<div class='alert alert-success'>" . $value['message'] . "</div>";
-                                    } else {                                       
-                                        echo "<div class='alert alert-info'>" . $value['message'] . "</div>";
+                                    }
+                                }
+                            }
+                            if(!empty($result[500])){
+                                if(count($result[500]) > 0) {
+                                    foreach($result[500] as $value){
+                                        echo "<div class='alert alert-danger'>" . $value['message'] . "</div>";
                                     }
                                 }
                             }
