@@ -34,7 +34,7 @@
                         <div class="form-group">                            
                             <label for="fileToUpload">Choose file</label>
                             <input type="file" name="fileToUpload" id="fileToUpload" class="form-control" required />
-                            <small id="emailHelp" class="form-text text-muted">Accept .docx or .pdf only.</small>
+                            <small id="emailHelp" class="form-text text-muted">Accept .docx, .zip or .pdf only.</small>
                         </div>
                         <div class="form-group">
                             <button type="submit" class="btn btn-primary float-right" name="UploadBTN">Submit</button>
