@@ -29,12 +29,12 @@
                         <hr />
                         <div class="form-group">
                             <label for="DocumentTitle">Document Title</label>
-                            <input type="text" class="form-control" id="InputDocumentTitle" name="InputDocumentTitle">
+                            <input type="text" class="form-control" id="InputDocumentTitle" name="InputDocumentTitle" required >
                         </div>
                         <div class="form-group">                            
                             <label for="fileToUpload">Choose file</label>
                             <input type="file" name="fileToUpload" id="fileToUpload" class="form-control" required />
-                            <small id="emailHelp" class="form-text text-muted">Accept .docx, .zip or .pdf only.</small>
+                            <small id="emailHelp" class="form-text text-muted">Accept .zip or .docx or .pdf only.</small>
                         </div>
                         <div class="form-group">
                             <button type="submit" class="btn btn-primary float-right" name="UploadBTN">Submit</button>

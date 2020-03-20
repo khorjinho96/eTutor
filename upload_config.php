@@ -63,7 +63,7 @@
             $file_extension = pathinfo($_FILES["fileToUpload"]["name"], PATHINFO_EXTENSION);
 
             if (!in_array($file_extension, $allowed_docs_extension)) {
-                echo "<script type='text/javascript'>alert('Only accept .docx, .zip and .pdf!');</script>";
+                echo "<script type='text/javascript'>alert('Only accept .zip or .docx or .pdf!');</script>";
             }elseif (($_FILES["fileToUpload"]["size"] > 10240000)){
                 echo "<script type='text/javascript'>alert('File has exceed 10mb limit!');</script>";
             } else {
@@ -72,6 +72,12 @@
                 $uploaded_file = base64_encode($uploaded_file);
 
                 $User_Email = $_SESSION['Email'];
+
+                $filename = 'Uploaded_Documents';
+
+                if (!file_exists($filename)) {
+                    mkdir($filename);
+                }
 
                 move_uploaded_file($_FILES['fileToUpload']['tmp_name'], $target_path);
 
