@@ -128,7 +128,7 @@
             $today = $today->format("Y-m-d");
             $lastDay = new DateTime("now");
             $lastDay->sub(new DateInterval('P' . $dayNum . 'D'));
-            $lastDay = $lastDay->format("Y-m-d");
+            $lastDay = $lastDay->format("Y-m-d H-i-s");
             $stmt = mysqli_stmt_init($this->databaseConnection);
             if(mysqli_stmt_prepare($stmt, 
                 "SELECT 
@@ -138,7 +138,7 @@
                 WHERE 
                     ((SenderEmail = ? AND RecipientEmail = ?) OR (SenderEmail = ? AND RecipientEmail = ?))
                 AND 
-                    DATE(DateSend) > ?")){
+                    DateSend > ?")){
                 mysqli_stmt_bind_param($stmt, "sssss", $email, $tutorEmail, $tutorEmail, $email, $lastDay);
                 mysqli_stmt_bind_result($stmt, $totalMessage);
                 foreach($email as $value){
