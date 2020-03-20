@@ -8,6 +8,8 @@
 
     if (isset($_POST['submit'])){
         if($_POST['submit'] === "Submit"){
+            $todate = date('Y-m-d');
+
             $errorMessages = array();
             if (preg_match("/[^a-zA-Z0-9 ]/", $_POST['title']) || empty(trim($_POST['title']))){
                 $errorMessages[] = "Invalid meeting title.";
@@ -30,6 +32,15 @@
                     $errorMessages[] = "Please complete the form";
                 }
             }
+
+            if ($date == null){
+                $errorMessages[] = "Please select a date";
+            }
+
+            if ($date < $todate){
+                $errorMessages[] = "Please select a valid date";
+            }
+
 
 
             if(count($errorMessages) === 0){

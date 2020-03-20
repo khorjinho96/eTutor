@@ -49,6 +49,7 @@ individual 40%
         evaluate yr own product : one pages (the whole system)
         process:
             your scrum in a sense that explain each of yr sprint (one pages)
+resolve around the group(conduct meeting, mechanism); github
  - evaluation of theme:
     - scrum master decide the factor: at least five factors(must be the same)                
     - justification for each member must half the page in paragraph form
