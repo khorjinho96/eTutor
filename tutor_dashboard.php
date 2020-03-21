@@ -30,11 +30,8 @@
                 $messageRepo = new MessageRepository();
                 $message = $messageRepo->getMessageSentByDay($student, $_POST['dayNum'], $email);
 
-                var_dump($message);
-
                 $meetingRepo = new MeetingRepository();
                 $meeting = $meetingRepo->getMeetingByDay($student, $_POST['dayNum'], $email);        
-                var_dump($meeting);
             }
             catch(Exception $ex){
                 $errorMessage = $ex->getMessage();

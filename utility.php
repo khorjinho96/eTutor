@@ -55,12 +55,12 @@
             echo '<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">';
             echo '<span class="navbar-toggler-icon"></span>';
             echo '</button>';
+            echo '<div class="collapse navbar-collapse" id="navbarToggleExternalContent">';
+            echo "<div class='container'>";
+            echo '<a class="navbar-brand" href="index.php">eTutor</a>';
             switch($entity) {
                 case "tutor":
                 case "student":
-                    echo '<div class="collapse navbar-collapse" id="navbarToggleExternalContent">';
-                    echo "<div class='container'>";
-                    echo '<a class="navbar-brand" href="index.php">eTutor</a>';
                     echo '<ul class="navbar-nav mr-auto">';		
                     echo '<li class="nav-item"><a class="nav-link" href="student_dashboard.php">Dashboard</a></li>';
                     echo '<li class="nav-item"><a class="nav-link" href="blogging.php">Blogging</a></li>';
@@ -88,14 +88,9 @@
                     echo '<ul class="navbar-nav ml-auto">';
                     echo '<li class="nav-item"><a class="nav-link" href="logout.php">Logout</a></li>';
                     echo '</ul>';
-                    echo '</div>';
-                    echo '</div>';
                 break;
 
                 case 'admin':
-                    echo '<div class="collapse navbar-collapse" id="navbarToggleExternalContent">';
-                    echo "<div class='container'>";
-                    echo '<a class="navbar-brand" href="index.php">eTutor</a>';
                     echo '<ul class="navbar-nav mr-auto">';		
                     echo '<li class="nav-item"><a class="nav-link" href="admin_dashboard.php">Dashboard</a></li>';
                     echo '<li class="nav-item"><a class="nav-link" href="allocate.php">Allocate</a></li>';
@@ -104,14 +99,13 @@
                     echo '<ul class="navbar-nav ml-auto">';
                     echo '<li class="nav-item"><a class="nav-link" href="logout.php">Logout</a></li>';
                     echo '</ul>';
-                    echo '</div>';
-                    echo '</div>';
                     break;
 
                 default:
                     break;
             }
-            echo "</div>";
+            echo '</div>';
+            echo '</div>';
             echo '</nav>';
         }
 
