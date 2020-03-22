@@ -52,21 +52,21 @@
 
                                 $result[200][] = array(
                                     "status" => 200,
-                                    "message" => $studentEmail . " has been allocated tutor " . $tutorEmail . " successfully."
+                                    "message" => $studentEmail . " has been " . ($reallocate ? "realloacted" : "allocated") . " allocated tutor " . $tutorEmail . " successfully."
                                 );
                             } else {
                                 switch(mysqli_stmt_errno($stmt)){
                                     case 1062:
                                         $result[500][] = array(
                                             "status" => 500,
-                                            "message" => $studentEmail . " has already been allocated tutor " . $tutorEmail . "."
+                                            "message" => $studentEmail . " has already been " . ($reallocate ? "realloacted" : "allocated") . " tutor " . $tutorEmail . "."
                                         );
                                         break;
 
                                     default:
                                         $result[500][] = array(
                                             "status" => 500,
-                                            "message" => $studentEmail . " failed to be allocated tutor " . $tutorEmail . ". " . mysqli_stmt_error($stmt)
+                                            "message" => $studentEmail . " failed to be " . ($reallocate ? "realloacted" : "allocated") . " tutor " . $tutorEmail . ". " . mysqli_stmt_error($stmt)
                                         );
                                         break;
                                 }
@@ -130,7 +130,7 @@
                     foreach($student as $studentEmail){
                         mysqli_stmt_execute($stmt);
                         if(mysqli_stmt_affected_rows($stmt) > 0) {
-                            $result = array_merge($result, $this->assign(array($studentEmail), $tutor, $staffId, true));
+                            $result = $this->assign(array($studentEmail), $tutor, $staffId, true);
                         } else {
                             $result[] = array(
                                 "status" => 500,
