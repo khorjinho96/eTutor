@@ -126,16 +126,30 @@
                 $stmt = mysqli_stmt_init($this->databaseConnection);
                 if(mysqli_stmt_prepare($stmt, "DELETE FROM assign WHERE StudentEmail = ?")){
                     $result = array();
+                    $result[200] = array();
+                    $resut[500] = array();
                     mysqli_stmt_bind_param($stmt, "s", $studentEmail);
                     foreach($student as $studentEmail){
                         mysqli_stmt_execute($stmt);
                         if(mysqli_stmt_affected_rows($stmt) > 0) {
-                            $result = $this->assign(array($studentEmail), $tutor, $staffId, true);
+                            $temp = $this->assign(array($studentEmail), $tutor, $staffId, true);
+                            if(array_key_exists(200, $temp)) {
+                                $result[200] = array_merge($temp[200], $result[200]);
+                            } else if(array_key_exists(500, $temp)) {
+                                $result[500] = array_merge($temp[500], $result[500]);
+                            }
                         } else {
-                            $result[] = array(
-                                "status" => 500,
-                                "message" => "Failed to reallocate student " . $studentEmail . ". " . mysqli_stmt_error($stmt)
-                            );
+                            if(mysqli_stmt_errno($stmt) === 0) {
+                                $result[500][] = array(
+                                    "status" => 500,
+                                    "message" => "Failed to reallocate student " . $studentEmail . ". Please confirmed the student has been allocated tutors previously."
+                                );
+                            } else {
+                                $result[500][] = array(
+                                    "status" => 500,
+                                    "message" => "Failed to reallocate student " . $studentEmail . ". " . mysqli_stmt_error($stmt)
+                                );
+                            }
                         }
                     }
 
