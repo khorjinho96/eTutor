@@ -52,7 +52,7 @@
 
                                 $result[200][] = array(
                                     "status" => 200,
-                                    "message" => $studentEmail . " has been " . ($reallocate ? "realloacted" : "allocated") . " allocated tutor " . $tutorEmail . " successfully."
+                                    "message" => $studentEmail . " has been " . ($reallocate ? "realloacted" : "allocated") . " tutor " . $tutorEmail . " successfully."
                                 );
                             } else {
                                 switch(mysqli_stmt_errno($stmt)){
