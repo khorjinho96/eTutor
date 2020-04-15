@@ -12,9 +12,9 @@
         $email = getUserEmail();
 
         if(getUserEntity() === 'admin'){
-            if(!empty($_GET['student'])){
-                if (filter_var(filter_var($_GET['student'], FILTER_SANITIZE_EMAIL), FILTER_VALIDATE_EMAIL)) {
-                    $email = $_GET['student'];
+            if(!empty($_SESSION['StudentEmail'])){
+                if (filter_var(filter_var($_SESSION['StudentEmail'], FILTER_SANITIZE_EMAIL), FILTER_VALIDATE_EMAIL)) {
+                    $email = $_SESSION['StudentEmail'];
                 } else {
                     throw new Exception("Invalid email.");
                 }                        
@@ -52,7 +52,7 @@
                             echo "<div class='alert alert-danger'>" . $errorMessage . "</div>";
                         } else {
                             if(count($message) === 0 && count($meeting) === 0){
-                                echo "<div class='alert alert-info'>Tutee <strong>" . $email . "</strong> currently do not have any interaction with your personal tutor(s) allocated.</div>";
+                                echo "<div class='alert alert-info'>Tutee <strong>" . $email . "</strong> currently do not have any interaction with personal tutor(s) allocated.</div>";
                             } else if(count($message) >= count($meeting)) {
                                 foreach($message as $key => $value){
                                     echo "<h4 style='border-bottom: solid black 1px'>" . $key . "</h4>";                                

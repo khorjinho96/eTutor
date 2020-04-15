@@ -124,6 +124,23 @@
             }
             break;
 
+        case 'getAllTutor':
+            try {
+                $tutor = array();                        
+                foreach($data as $key => $value){
+                    if($value['entity'] === 'tutor'){
+                        $tutor[] = $value['email'];
+                    }
+                }
+
+                http_response_code(200);
+                echo json_encode($tutor);
+            }
+            catch(Exception $ex){
+                http_response_code(500);
+                echo json_encode(array("message" => $ex->getMessage()));
+            }
+            break;
         case 'getUserName':
             try {
                 $user = json_decode($_POST['user'], true);

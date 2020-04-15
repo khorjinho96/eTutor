@@ -114,12 +114,10 @@
                                             case 'tutor':
                                                 $recipient = $assignRepo->getStudent(getUserEmail());
                                                 print_r($recipient);
-                                                echo "Hi";
                                                 break;
 
                                             case 'student':
                                                 $recipient = $assignRepo->getTutor(getUserEmail());
-                                                echo "ho2";
                                                 break;
 
                                             default:
@@ -128,7 +126,7 @@
 
                                         if(count($recipient) > 0){
                                             foreach($recipient as $value){
-                                                echo "<option value='" . $value['email'] . "'>" . $value['name'] . "</option>";
+                                                echo "<option value='" . $value['email'] . "'>" . $value['name'] . " - " . $value['email'] . "</option>";
                                             }
                                         } else {
                                             echo "<option value='' disabled>No recipient available</option>";
@@ -222,7 +220,7 @@
                             case 'Send':
                                 if($('#message').val().trim().length > 0) {
                                     if(conn.readyState === WebSocket.OPEN){
-                                        conn.send(JSON.stringify({ flag: "message", message : $('#message').val(), recipient : $('#recipient').val() }));
+                                        conn.send(JSON.stringify({ flag: "message", message : $('#message').val().trim().replace(/[<]/g, '&lt').replace(/[>]/g, '&gt'), recipient : $('#recipient').val() }));
                                     }
                                 } else {
                                     alert("Invalid message");

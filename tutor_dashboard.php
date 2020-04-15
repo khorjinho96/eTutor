@@ -13,9 +13,9 @@
                 $email = getUserEmail();
 
                 if(getUserEntity() === 'admin'){
-                    if(!empty($_GET['tutor'])){
-                        if (filter_var(filter_var($_GET['tutor'], FILTER_SANITIZE_EMAIL), FILTER_VALIDATE_EMAIL)) {
-                            $email = $_GET['tutor'];
+                    if(!empty($_SESSION['TutorEmail'])){
+                        if (filter_var(filter_var($_SESSION['TutorEmail'], FILTER_SANITIZE_EMAIL), FILTER_VALIDATE_EMAIL)) {
+                            $email = $_SESSION['TutorEmail'];
                         } else {
                             throw new Exception("Invalid email.");
                         }                        

@@ -211,9 +211,10 @@
                                 $editmeetingstart = $row['meeting_start'];
                                 $editmeetingend = $row['meeting_end'];
                                 $editmeetingrecord = $row['meeting_record'];
+                                $status = $row['meeting_status'];
                             }
                             $todate =  date("Y-m-d");
-                            if ($todate > $editmeetingdate){
+                            if ($todate > $editmeetingdate || $status == "Approve"){
                                 echo "    <div class=\"form-group\">
                                 <label for=\"date\">Date:</label>
                                 <input type=\"date\" class=\"form-control\" id=\"date\" name=\"date\" placeholder=\"Date\" value='$editmeetingdate' readonly required></div>";
@@ -249,7 +250,7 @@
                                     $editmeetingdate = $row['meeting_date'];
                                 }
                                 $todate =  date("Y-m-d");
-                                if ($todate > $editmeetingdate){
+                                if ($todate > $editmeetingdate || $status == "Approve"){
                                 }else{
                                     echo "<input type=\"submit\" name=\"delete\" value=\"Delete\" class=\"btn btn-danger float-right\"/>";
                                     echo "</div>";

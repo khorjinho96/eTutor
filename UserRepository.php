@@ -33,6 +33,36 @@
             }                        
         }
 
+        public function getAllTutor($student = array()){
+            try {
+                $curl = curl_init();
+
+                curl_setopt($curl, CURLOPT_URL, "http://localhost/etutor/dummyApi.php" ); 
+                curl_setopt($curl, CURLOPT_POST, 1 ); 
+                curl_setopt($curl, CURLOPT_POSTFIELDS, array("function" => "getAllTutor")); 
+                curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 0);
+                curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
+                curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1); 
+                $postResult = curl_exec($curl); 
+
+                if (curl_errno($curl)) { 
+                    throw new Exception(curl_error($curl));
+                } 
+
+                if(curl_getinfo($curl, CURLINFO_HTTP_CODE) === 200){
+                    return json_decode($postResult, true);
+                } else {
+                    throw new Exception(json_decode($postResult, true)['message']);
+                }
+            }
+            catch(Exception $ex) {
+                throw new Exception($ex->getMessage()); 
+            }
+            finally {
+                curl_close($curl);
+            }                        
+        }
+
         public function getName($user = array()){
             try {
                 $curl = curl_init();

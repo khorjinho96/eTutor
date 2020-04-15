@@ -19,7 +19,8 @@
                         $userRepo = new UserRepository();
                         $tutee = $userRepo->verifyStudent(array($_POST['email']));
                         if(count($tutee) === 1){
-                            header("Location: student_dashboard.php?student=" . $_POST['email']);
+                            $_SESSION['StudentEmail'] = $_POST['email'];
+                            header("Location: student_dashboard.php");
                         }
                     }
                     catch(Exception $ex) {
@@ -32,7 +33,8 @@
                         $userRepo = new UserRepository();
                         $tutor = $userRepo->verifyTutor(array($_POST['email']));
                         if(count($tutor) === 1){
-                            header("Location: tutor_dashboard.php?tutor=" . $_POST['email']);
+                            $_SESSION['TutorEmail'] = $_POST['email'];
+                            header("Location: tutor_dashboard.php");
                         }
                     }
                     catch(Exception $ex) {
@@ -47,9 +49,11 @@
     }
 
     try {
+        $userRepo = new UserRepository();
+
         $assignRepo = new AssignRepository();
         $students = $assignRepo->getAllStudentEmail();
-        $tutors = $assignRepo->getAllTutorEmail();
+        $tutors = $userRepo->getAllTutor();
        
         $messageRepo = new MessageRepository();
         $message7 = $messageRepo->getMessageSentLast7($students);
@@ -61,7 +65,6 @@
         $meeting7 = $meetingRepo->getMeetingLast7($students);
         $meeting28 = $meetingRepo->getMeetingLast28($students);
 
-        $userRepo = new UserRepository();
         $studentNoTutor = $userRepo->getStudentWithoutTutor($students);
     }
     catch(Exception $ex) {
