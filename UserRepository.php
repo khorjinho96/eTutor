@@ -1,5 +1,4 @@
 <?php
-
     use App\Repositories\Users\UserRepositoryInterface;    
 
     class UserRepository implements UserRepositoryInterface{

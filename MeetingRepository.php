@@ -36,14 +36,7 @@
                 }
                 mysqli_stmt_close($stmt);
                 return $result;
-            }
-            $meeting = array();
-            $meeting['tutor2@gmail.com'] = array(
-                "2020-02-15" => 11,
-                "2020-02-12" => 2 
-            );
-
-            return $meeting;
+            }           
         }
 
         public function getMeetingByDay($email = array(), $dayNum, $tutorEmail){
@@ -127,6 +120,3 @@
             }
         }
     }
-
-
-

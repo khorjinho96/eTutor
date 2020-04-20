@@ -33,14 +33,6 @@
         "name" => "student4"
     );
 
-    $data["khorjinho96@gmail.com"] = array(
-        "id" => 5,
-        "email" => "khorjinho96@gmail.com",
-        "entity" => "student",
-        "password" => "12345678",
-        "name" => "student5"
-    );
-
     $data["tutor1@gmail.com"] = array(
         "id" => 1,
         "email" => "tutor1@gmail.com",
@@ -71,14 +63,6 @@
         "entity" => "tutor",
         "password" => "12345678",
         "name" => "tutor4"
-    );
-
-    $data["jinhomobile@gmail.com"] = array(
-        "id" => 5,
-        "email" => "jinhomobile@gmail.com",
-        "entity" => "tutor",
-        "password" => "12345678",
-        "name" => "tutor5"
     );
 
     $data["admin1@gmail.com"] = array(
